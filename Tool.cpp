@@ -30,8 +30,6 @@ void Tool::setCost(double cost) {
 	this->cost = cost;
 }
 
-
-
 int Tool::getQuantity() const {
 	return quantity;
 }
@@ -43,8 +41,6 @@ void Tool::setQuantity(int quantity) {
 int Tool::getRecord() const {
 	return record;
 }
-
-
 
 void Tool::setRecord(int record) {
 	this->record = record;
@@ -58,7 +54,7 @@ void Tool::setName(const string& name) {
 }
 
 void Tool::print() {
-	cout<<  "|"<<getRecord()<<getName()<<"|"<<getQuantity()<<"|"<<getCost()<<endl;
+	cout<<  "|"<<getRecord()<<getName()<<"|"<<getQuantity()<<"|"<<getCost()<<"|"<<endl;
 }
 
 

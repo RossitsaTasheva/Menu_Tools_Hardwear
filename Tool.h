@@ -27,14 +27,15 @@ public:
 
 	int getRecord() const;
 	void setRecord(int record);
-void print();
+
+	void print();
 
 	const string& getName() const;
 	void setName(const string& name);
 
 private:
 	int record;
-string name;
+	string name;
 	int quantity;
 	double cost;
 };
