@@ -5,36 +5,24 @@
 // Copyright   : Your copyright notice
 // Description : Hello World in C++, Ansi-style
 //============================================================================
-#include "OperationTools.h"
-#include "Tool.h"
 
+#include "Tool.h"
 #include <iostream>
 #include "Tool.h"
 #include <fstream>
 #include <string>
 #include <iomanip>
 #include <cstdlib>
+#include "OperationTools.h"
 using namespace std;
 
 int main() {
 
-	/*ofstream fout("hardware.dat", ios::binary);
+	OperationTools op;
 
-	if (!fout) {
-		cerr << "File could not be opened." << endl;
-		exit(1);
-	}
-
-	Tool t;
-	for (int i = 0; i < 100; i++)
-		fout.write(reinterpret_cast<const char *>(&t), sizeof(Tool));
-
-	return 0;
-}*/
-	vector <Tool*> hardwere;
-	Tool t(1, "www", 2, 2.3	);
-	hardwere.push_back(&t);
-	t.print();
+	//op.initialize();
 
 	fstream inOutTool( "hardware.dat", ios::in | ios::out );        if ( !inOutTool ){           cerr << "File could not be opened." << endl;           exit ( 1 );        }
-        int choice;        while ( ( choice = enterChoice() ) != END )        {           switch ( choice )           {              case PRINT:                 createTextFile( inOutTool );                 break;              case UPDATE:                 updateRecord(  inOutTool );                 break;              case NEW:                 newRecord(  inOutTool );                 break;              case DELETE:                 deleteRecord(  inOutTool );                 break;              default: //                 cerr << "Incorrect choice" << endl;                 break;           }         inOutTool.clear();        }        return 0;     }
+
+        int choice;        while ( ( choice = op. enterChoice() ) != END )        {        	switch ( choice )           {        		case PRINT:  op.createTextFile( inOutTool ); break;        		case UPDATE:  op.updateRecord(  inOutTool ); break;        		case NEW:    op.newRecord(  inOutTool );   break;
+        		case DELETE:    op.deleteRecord(  inOutTool );    break;        		default:   cerr << "Incorrect choice" << endl;    break;        	}         inOutTool.clear();        }       return 0;    }

@@ -16,7 +16,7 @@
 #include <vector>
 using namespace std;
 
-enum Choices { PRINT = 1, UPDATE, NEW, DELETE, END};
+enum Choices { PRINT = 1, UPDATE, NEW, DELETE, END };
 
 class OperationTools {
 public:
@@ -25,12 +25,13 @@ public:
 
 	int enterChoice();
 	void print();
-	void createTextFile(fstream&);
+	void createTextFile (fstream&);
 	void updateRecord(fstream&);
 	void newRecord(fstream&);
 	void deleteRecord(fstream&);
 	void outputLine(ostream&, const Tool &);
 	int getRecord(const char * const);
+	void initialize();
 
 	virtual ~OperationTools();
 	const vector<Tool*>& getHardwere() const;

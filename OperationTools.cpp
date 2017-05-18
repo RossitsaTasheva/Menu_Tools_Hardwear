@@ -13,20 +13,35 @@ OperationTools::OperationTools(vector<Tool*>& hardwere) {
 
 }
 
-OperationTools::~OperationTools() {}
+OperationTools::~OperationTools() {
+}
 
 const vector<Tool*>& OperationTools::getHardwere() const {
 	return hardwere;
 }
+
+void OperationTools::initialize() {
+	ofstream fout("hardware.dat", ios::binary);
+
+		if (!fout) {
+			cerr << "File could not be opened." << endl;
+			exit(1);
+		}
+
+		Tool t;
+		for (int i = 0; i < 100; i++)
+			fout.write(reinterpret_cast<const char *>(&t), sizeof(Tool));
+}
+
 void OperationTools::setHardwere(const vector<Tool*>& hardwere) {
 	this->hardwere = hardwere;
 }
 void OperationTools::print() {
 }
-//---------------------------------------------------------------------------------
+//enterChoice---------------------------------------------------------------------------------
 int OperationTools::enterChoice() {
 
-	cout << "\n~~~~~~~~~~~~~~~Enter your choice~~~~~~~~~~~~~~~~~~~~~~~" << endl
+	cout << "\n~~~~~~~~~~~Enter your choice~~~~~~~" << endl
 			<< "------1 - store a formatted text file of record-------" << endl
 			<< "-------called \"print.txt\" for printing--------------" << endl
 			<< "--------2 - update an record--------------------------" << endl
@@ -41,7 +56,7 @@ int OperationTools::enterChoice() {
 }
 // called \"print.txt\" for printing---------------------------------------------
 void OperationTools::createTextFile(fstream& readFromFile) {
-	ofstream outPrintFile("print.txt", ios::out);
+	ofstream outPrintFile("print.txt");
 	if (!outPrintFile) {
 		cerr << "File could not be created." << endl;
 		exit(1);
@@ -51,17 +66,18 @@ void OperationTools::createTextFile(fstream& readFromFile) {
 			<< setw(11) << "Quantity" << right << setw(10) << "cost" << endl;
 	cout << "t2~~~~~~~~~~~~~~~~~~~~" << endl;
 	readFromFile.seekg(0);
-	Tool tool;
-	readFromFile.read(reinterpret_cast<char *>(&tool), sizeof(Tool));
+	Tool t;
+	readFromFile.read(reinterpret_cast<char *>(&t), sizeof(Tool));
 	cout << "t3~~~~~~~~~~~~~~~~~~~~" << endl;
 	while (!readFromFile.eof()) {
-		if (tool.getRecord() != 0)
-			outputLine(outPrintFile, tool);
-		readFromFile.read(reinterpret_cast<char *>(&tool), sizeof(Tool));
+		if (t.getRecord() != 0)
+			outputLine(outPrintFile, t);
+		readFromFile.read(reinterpret_cast<char *>(&t), sizeof(Tool));
 	}
 	cout << "t4~~~~~~~~~~~~~~~~~~~~" << endl;
 }
 //update an record-------------------------------------------------------------
+
 void OperationTools::updateRecord(fstream& updateFile) {
 	int record = getRecord("Enter account to update");
 	updateFile.seekg((record - 1) * sizeof(Tool));
@@ -74,6 +90,7 @@ void OperationTools::updateRecord(fstream& updateFile) {
 	} else
 		cerr << "Record #" << record << " has no information." << endl;
 }
+//newRecord-------------------------------------------------------------
 
 void OperationTools::newRecord(fstream& insertInFile) {
 	int record = getRecord("Enter new tool record");
@@ -109,6 +126,8 @@ void OperationTools::newRecord(fstream& insertInFile) {
 		cerr << "Record #" << record << " already contains information."
 				<< endl;
 }
+
+//deleteRecord-------------------------------------------------------------
 
 void OperationTools::deleteRecord(fstream& deleteFromFile) {
 	int record = getRecord("Enter record to delete");
